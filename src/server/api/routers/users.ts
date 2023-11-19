@@ -2,10 +2,24 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { db } from "@/server/db";
 
+const updateUserSchema = z.object({
+  userId: z.string(),
+  email: z.string().email(),
+  username: z.string(),
+  avatar: z.string(),
+  income: z.number(),
+});
+
+type ResponseType = Promise<{
+  message?: string;
+  success: boolean;
+  data?: Record<string, string | number>;
+}>;
+
 export const userRouter = createTRPCRouter({
   getUser: publicProcedure
     .input(z.object({ userId: z.string() }))
-    .query(async ({ input: { userId } }) => {
+    .query(async ({ input: { userId } }): ResponseType => {
       try {
         if (!userId) {
           return {
@@ -28,7 +42,7 @@ export const userRouter = createTRPCRouter({
         }
 
         return {
-          user: { ...userToFind },
+          data: { ...userToFind },
           success: true,
         };
       } catch (_error) {
@@ -40,7 +54,7 @@ export const userRouter = createTRPCRouter({
     }),
   deleteUser: publicProcedure
     .input(z.object({ userId: z.string() }))
-    .mutation(async ({ input: { userId } }) => {
+    .mutation(async ({ input: { userId } }): ResponseType => {
       try {
         if (!userId) {
           return {
@@ -92,6 +106,55 @@ export const userRouter = createTRPCRouter({
             },
           },
         });
-      } catch (_error) {}
+
+        return {
+          success: true,
+        };
+      } catch (_error) {
+        return {
+          message: "Internal Server Error",
+          success: false,
+        };
+      }
     }),
+  updateUser: publicProcedure
+    .input(updateUserSchema)
+    .mutation(
+      async ({
+        input: { userId, email, username, income, avatar },
+      }): ResponseType => {
+        try {
+          if (!userId) {
+            return {
+              success: false,
+              message: "Bad request",
+            };
+          }
+
+          const data = {
+            email,
+            username,
+            income,
+            avatar,
+          };
+
+          await db.user.update({
+            where: {
+              id: userId,
+            },
+            data,
+          });
+
+          return {
+            success: true,
+            message: "User updated",
+          };
+        } catch (_error) {
+          return {
+            success: false,
+            message: "Internal Server Error",
+          };
+        }
+      },
+    ),
 });
