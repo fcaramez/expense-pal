@@ -1,6 +1,9 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+
 import { db } from "@/server/db";
+import { type ResponseType } from "@/types";
+
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
 const updateUserSchema = z.object({
   userId: z.string(),
@@ -9,12 +12,6 @@ const updateUserSchema = z.object({
   avatar: z.string(),
   income: z.number(),
 });
-
-type ResponseType = Promise<{
-  message?: string;
-  success: boolean;
-  data?: Record<string, string | number>;
-}>;
 
 export const userRouter = createTRPCRouter({
   getUser: publicProcedure

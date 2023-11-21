@@ -1,0 +1,49 @@
+{
+  "extends": ["next/core-web-vitals", "plugin:tailwindcss/recommended"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "react/no-unescaped-entities": "off",
+        "react/jsx-curly-brace-presence": [
+          "error",
+          {
+            "props": "never",
+            "children": "never",
+            "propElementValues": "always"
+          }
+        ],
+        "import/order": [
+          "error",
+          {
+            "groups": [
+              "builtin",
+              "external",
+              "internal",
+              ["parent", "sibling"]
+            ],
+            "pathGroups": [
+              {
+                "pattern": "react",
+                "group": "external",
+                "position": "before"
+              }
+            ],
+            "pathGroupsExcludedImportTypes": ["react"],
+            "newlines-between": "always",
+            "alphabetize": {
+              "order": "asc",
+              "caseInsensitive": true
+            }
+          }
+        ],
+        "tailwindcss/no-arbitrary-value": "warn"
+      }
+    }
+  ],
+  "settings": {
+    "tailwindcss": {
+      "callees": ["cn", "classnames", "clsx"]
+    }
+  }
+}
