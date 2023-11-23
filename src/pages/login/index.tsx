@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -26,8 +27,10 @@ export default function LoginPage() {
   });
 
   const loginFormSchema = z.object({
-    searchCriteria: z.string(),
-    password: z.string(),
+    searchCriteria: z
+      .string()
+      .min(1, { message: "Username or Email is required" }),
+    password: z.string().min(1, { message: "Password is required" }),
   });
 
   const loginForm = useForm({
@@ -44,7 +47,7 @@ export default function LoginPage() {
 
   return (
     <main className="flex h-screen w-screen flex-col items-center justify-center gap-6 ">
-      <h1 className="text-center text-2xl font-semibold">Login</h1>
+      <h1 className="text-center text-2xl font-bold text-font">Login</h1>
       <Form {...loginForm}>
         <form
           onSubmit={loginForm.handleSubmit(handleFormSubmission)}
@@ -86,9 +89,19 @@ export default function LoginPage() {
             )}
           />
 
-          <Button className="col-span-2 w-full text-sm" type="submit">
+          <Button
+            variant="primary"
+            className="col-span-2 w-full rounded-xl border-none text-white"
+            type="submit"
+          >
             Submit
           </Button>
+          <p className="col-span-2">
+            Don't have an account?{" "}
+            <span className="text-highlight">
+              <Link href="/signup">Signup Here</Link>
+            </span>
+          </p>
         </form>
       </Form>
     </main>

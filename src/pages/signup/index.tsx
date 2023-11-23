@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -29,10 +30,10 @@ export default function SignupPage() {
   const signupFormSchema = z.object({
     username: z
       .string()
-      .min(0, { message: "Username must have more than 2 characters" })
+      .min(2, { message: "Username must have more than 2 characters" })
       .max(15, { message: "Username must not exceed 15 characters" }),
     email: z.string().email("Please provide a valid email address"),
-    password: z.string(),
+    password: z.string().min(1, { message: "Password is required" }),
     income: z.string(),
     avatar: z.string(),
   });
@@ -88,13 +89,13 @@ export default function SignupPage() {
   };
 
   return (
-    <main className="flex h-screen w-screen flex-col items-center justify-center gap-6">
-      <h1 className="text-center text-2xl font-semibold">Signup</h1>
+    <main className="flex h-screen w-screen flex-col items-center justify-start p-6">
+      <h1 className="text-font text-center text-2xl font-semibold">Signup</h1>
       <Form {...signupForm}>
         <div>
           <form
             onSubmit={signupForm.handleSubmit(handleFormSubmission)}
-            className="grid  grid-cols-2 place-items-center gap-4 p-6"
+            className="grid grid-cols-2 place-items-center gap-4 p-6"
           >
             <FormField
               control={signupForm.control}
@@ -109,6 +110,7 @@ export default function SignupPage() {
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -179,10 +181,18 @@ export default function SignupPage() {
                 accept="image/*"
               />
             </div>
-
-            <Button className="col-span-2 w-full text-sm" type="submit">
+            <Button
+              variant="primary"
+              className="col-span-2 w-full rounded-xl border-none text-white"
+            >
               Submit
             </Button>
+            <p className="col-span-2">
+              Already have an account?{" "}
+              <span className="text-highlight">
+                <Link href="/login">Login Here</Link>
+              </span>
+            </p>
           </form>
         </div>
       </Form>
