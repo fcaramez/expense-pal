@@ -1,5 +1,5 @@
-import * as bcrypt from "bcrypt";
-import * as jwt from "jsonwebtoken";
+import { verify, hash } from "argon2";
+import { sign } from "jsonwebtoken";
 import { z } from "zod";
 
 import { env } from "@/env.mjs";
@@ -39,6 +39,8 @@ export const authRouter = createTRPCRouter({
             };
           }
 
+          console.log("Inputs: ", email, username, password, avatar, income);
+
           const userExists = await db.user.findFirst({
             where: {
               email,
@@ -58,7 +60,7 @@ export const authRouter = createTRPCRouter({
             imageUrl = avatar;
           }
 
-          const hashedPassword = await bcrypt.hash(password, 10);
+          const hashedPassword = await hash(password);
 
           const newUser = await db.user.create({
             data: {
@@ -76,7 +78,7 @@ export const authRouter = createTRPCRouter({
             email,
           };
 
-          const token = jwt.sign(payload, TOKEN_SECRET);
+          const token = sign(payload, TOKEN_SECRET);
 
           return {
             message: `Welcome, ${newUser.username}!`,
@@ -125,7 +127,7 @@ export const authRouter = createTRPCRouter({
 
         const userPassword = userToFind.password;
 
-        const comparePasswords = await bcrypt.compare(password, userPassword);
+        const comparePasswords = await verify(userPassword, password);
 
         if (!comparePasswords) {
           return {
@@ -140,7 +142,7 @@ export const authRouter = createTRPCRouter({
           email: userToFind.email,
         };
 
-        const token = jwt.sign(payload, TOKEN_SECRET);
+        const token = sign(payload, TOKEN_SECRET);
 
         return {
           message: `Welcome, ${userToFind.username}!`,
