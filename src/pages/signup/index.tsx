@@ -73,9 +73,7 @@ export default function SignupPage() {
     [signupForm],
   );
 
-  const handleFormSubmission = async (
-    values: z.infer<typeof signupFormSchema>,
-  ) => {
+  const handleFormSubmission = (values: z.infer<typeof signupFormSchema>) => {
     const parsedNumber = Number(signupForm.getValues().income);
 
     const payload = {
@@ -93,98 +91,100 @@ export default function SignupPage() {
     <main className="flex h-screen w-screen flex-col items-center justify-center gap-6">
       <h1 className="text-center text-2xl font-semibold">Signup</h1>
       <Form {...signupForm}>
-        <form
-          onSubmit={signupForm.handleSubmit(handleFormSubmission)}
-          className="grid  grid-cols-2 place-items-center gap-4 p-6"
-        >
-          <FormField
-            control={signupForm.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input
-                    autoComplete="username"
-                    placeholder="johnDoe"
-                    {...field}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={signupForm.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    autoComplete="email"
-                    placeholder="john@gmail.com"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={signupForm.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem className="col-span-2 w-full">
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    autoComplete="password"
-                    placeholder="*********"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={signupForm.control}
-            name="income"
-            render={({ field }) => (
-              <FormItem className="col-span-2 w-full">
-                <FormLabel>Income</FormLabel>
-                <FormControl>
-                  <Input
-                    type="income"
-                    autoComplete="income"
-                    placeholder="$"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <div className="col-span-2 w-full">
-            <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-              Profile Picture
-            </label>
-            <input
-              className="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-black focus:outline-none dark:border-black dark:bg-black dark:text-gray-400 dark:placeholder:text-black"
-              id="file_input"
-              onChange={handleFileInput}
-              type="file"
-              accept="image/*"
+        <div>
+          <form
+            onSubmit={signupForm.handleSubmit(handleFormSubmission)}
+            className="grid  grid-cols-2 place-items-center gap-4 p-6"
+          >
+            <FormField
+              control={signupForm.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input
+                      autoComplete="username"
+                      placeholder="johnDoe"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
             />
-          </div>
+            <FormField
+              control={signupForm.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      autoComplete="email"
+                      placeholder="john@gmail.com"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={signupForm.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="col-span-2 w-full">
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      autoComplete="password"
+                      placeholder="*********"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={signupForm.control}
+              name="income"
+              render={({ field }) => (
+                <FormItem className="col-span-2 w-full">
+                  <FormLabel>Income</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="income"
+                      autoComplete="income"
+                      placeholder="$"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Button className="col-span-2 w-full text-sm" type="submit">
-            Submit
-          </Button>
-        </form>
+            <div className="col-span-2 w-full">
+              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                Profile Picture
+              </label>
+              <input
+                className="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-black focus:outline-none dark:border-black dark:bg-black dark:text-gray-400 dark:placeholder:text-black"
+                id="file_input"
+                onChange={handleFileInput}
+                type="file"
+                accept="image/*"
+              />
+            </div>
+
+            <Button className="col-span-2 w-full text-sm" type="submit">
+              Submit
+            </Button>
+          </form>
+        </div>
       </Form>
     </main>
   );
