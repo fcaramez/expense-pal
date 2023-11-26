@@ -89,8 +89,8 @@ export default function SignupPage() {
   };
 
   return (
-    <main className="flex h-screen w-screen flex-col items-center justify-start p-6">
-      <h1 className="text-font text-center text-2xl font-semibold">Signup</h1>
+    <main className="flex h-full w-screen flex-1 flex-col items-center justify-center">
+      <h1 className="text-center text-2xl font-bold text-black">Signup</h1>
       <Form {...signupForm}>
         <div>
           <form
@@ -170,12 +170,11 @@ export default function SignupPage() {
             />
 
             <div className="col-span-2 w-full">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className=" mb-2 block text-sm font-medium dark:text-white">
                 Profile Picture
               </label>
               <input
                 className="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-black focus:outline-none dark:border-black dark:bg-black dark:text-gray-400 dark:placeholder:text-black"
-                id="file_input"
                 onChange={handleFileInput}
                 type="file"
                 accept="image/*"
@@ -183,13 +182,13 @@ export default function SignupPage() {
             </div>
             <Button
               variant="primary"
-              className="col-span-2 w-full rounded-xl border-none text-white"
+              className="col-span-2 w-full rounded-xl border-none text-white shadow-xl"
             >
               Submit
             </Button>
-            <p className="col-span-2">
+            <p className="col-span-2 text-sm">
               Already have an account?{" "}
-              <span className="text-highlight">
+              <span className="text-main">
                 <Link href="/login">Login Here</Link>
               </span>
             </p>

@@ -46,8 +46,8 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="flex h-screen w-screen flex-col items-center justify-center gap-6 ">
-      <h1 className="text-center text-2xl font-bold text-font">Login</h1>
+    <main className="flex h-full w-screen flex-col items-center justify-center gap-6 ">
+      <h1 className="text-font text-center text-2xl font-bold">Login</h1>
       <Form {...loginForm}>
         <form
           onSubmit={loginForm.handleSubmit(handleFormSubmission)}
@@ -57,7 +57,7 @@ export default function LoginPage() {
             control={loginForm.control}
             name="searchCriteria"
             render={({ field }) => (
-              <FormItem className="col-span-2 w-full">
+              <FormItem className="w-full">
                 <FormLabel>Username or Email</FormLabel>
                 <FormControl>
                   <Input
@@ -74,7 +74,7 @@ export default function LoginPage() {
             control={loginForm.control}
             name="password"
             render={({ field }) => (
-              <FormItem className="col-span-2 w-full">
+              <FormItem className="w-full">
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
@@ -91,14 +91,14 @@ export default function LoginPage() {
 
           <Button
             variant="primary"
-            className="col-span-2 w-full rounded-xl border-none text-white"
+            className="w-full rounded-xl border-none text-white shadow-xl"
             type="submit"
           >
             Submit
           </Button>
-          <p className="col-span-2">
+          <p>
             Don't have an account?{" "}
-            <span className="text-highlight">
+            <span className="text-main">
               <Link href="/signup">Signup Here</Link>
             </span>
           </p>
