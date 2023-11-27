@@ -16,25 +16,25 @@ export const AppBar = () => {
     <header className="w-full">
       <nav className="flex items-center justify-around p-6">
         <Link href="/" className="flex items-center gap-2 hover:cursor-pointer">
-          <FaMoneyBill className="text-main h-12 w-12" />
+          <FaMoneyBill className="h-12 w-12 text-main" />
           <h1 className="text-2xl font-bold">Expense Pal</h1>
         </Link>
         <div className="space-x-6">
           <Link
             href="/feed"
-            className="hover:text-main hidden rounded-xl p-2 lg:inline"
+            className="hidden rounded-xl p-2 hover:text-main lg:inline"
           >
             Feed
           </Link>
           <Link
             href="/profile/expenses"
-            className="rounded-xlp-2 hover:text-main hidden  lg:inline"
+            className="rounded-xlp-2 hidden hover:text-main  lg:inline"
           >
             Expenses
           </Link>
           <Link
             href="/profile"
-            className="rounded-xlp-2 hover:text-main hidden  lg:inline"
+            className="rounded-xlp-2 hidden hover:text-main  lg:inline"
           >
             Account
           </Link>
